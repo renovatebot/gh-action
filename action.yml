@@ -48,6 +48,9 @@ inputs:
     description: 'docker-builder: prune docker system after build'
     required: false
     default: 'false'
+  platforms:
+    description: 'docker-builder: platforms to build for'
+    required: false
 
 runs:
   using: 'node12'

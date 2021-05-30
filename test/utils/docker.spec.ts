@@ -202,6 +202,51 @@ describe(getName(__filename), () => {
       expect(utils.exec.mock.calls).toMatchSnapshot();
     });
 
+    it('multiplatform (2)', async () => {
+      utils.exec.mockResolvedValueOnce({
+        ...res,
+      });
+
+      await build({
+        imagePrefix,
+        image,
+        cache,
+        platforms: ['linux/amd64', 'linux/arm64'],
+      });
+      expect(utils.exec.mock.calls).toMatchSnapshot();
+    });
+
+    it('multiplatform (dry-run)', async () => {
+      utils.exec.mockResolvedValueOnce({
+        ...res,
+      });
+
+      await build({
+        imagePrefix,
+        image,
+        cache,
+        dryRun: true,
+        platforms: ['linux/amd64', 'linux/arm64'],
+      });
+      expect(utils.exec.mock.calls).toMatchSnapshot();
+    });
+
+    it('multiplatform single platform)', async () => {
+      utils.exec.mockResolvedValueOnce({
+        ...res,
+      });
+
+      await build({
+        imagePrefix,
+        image,
+        cache,
+        cacheTags: ['dummy'],
+        dryRun: true,
+        platforms: ['linux/arm64'],
+      });
+      expect(utils.exec.mock.calls).toMatchSnapshot();
+    });
+
     it('retries', async () => {
       utils.exec.mockRejectedValueOnce(
         new ExecError(1, 'failed', 'unexpected status: 400 Bad Request', '')
